@@ -1,9 +1,8 @@
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Prop, Vue } from 'vue-property-decorator'
 import { Mark, Styles } from './typings'
 
 import './styles/mark.scss'
 
-@Component
 export default class VueSlideMark extends Vue {
   @Prop({ required: true })
   mark!: Mark
@@ -47,6 +46,7 @@ export default class VueSlideMark extends Vue {
 
   labelClickHandle(e: MouseEvent | TouchEvent) {
     e.stopPropagation()
+    //@ts-ignore
     this.$emit('pressLabel', this.mark.pos)
   }
 
@@ -54,19 +54,23 @@ export default class VueSlideMark extends Vue {
     const mark = this.mark
     return (
       <div class={this.marksClasses}>
-        {this.$slots.step || (
-          <div
-            class={this.stepClasses}
-            style={[
-              this.stepStyle,
-              mark.style,
-              mark.active ? this.stepActiveStyle : null,
-              mark.active ? mark.activeStyle : null,
-            ]}
-          />
-        )}
+        {
+          /* @ts-ignore*/
+          this.$slots.step || (
+            <div
+              class={this.stepClasses}
+              style={[
+                this.stepStyle,
+                mark.style,
+                mark.active ? this.stepActiveStyle : null,
+                mark.active ? mark.activeStyle : null,
+              ]}
+            />
+          )
+        }
         {!this.hideLabel
-          ? this.$slots.label || (
+          ? //@ts-ignore
+            this.$slots.label || (
               <div
                 class={this.labelClasses}
                 style={[

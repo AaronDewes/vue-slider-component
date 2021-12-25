@@ -1,61 +1,29 @@
 <template>
-  <div id="app">
-    <navbar />
-    <section ref="content" class="content">
-      <div class="markdown-body">
-        <router-view />
-        <page-footer />
-      </div>
-    </section>
+  <div>
+    <vue-slider v-model="value">
+        <template v-slot:label="{ active, value }">
+          <div :class="['vue-slider-mark-label', 'text-center', { active }]">
+            <span class="text-muted">~ 1h {{ value }}</span>
+          </div>
+        </template>
+    </vue-slider>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import Navbar from './components/Navbar.vue'
-import PageFooter from './components/PageFooter.vue'
-
-import { setQuery, getQuery, getTheme } from './utils'
-
-@Component({
-  components: {
-    Navbar,
-    PageFooter
-  }
-})
-export default class App extends Vue {
-
-  @Watch('$route')
-  onRouteChanged() {
-    (this.$refs.content as HTMLDivElement).scrollTop = 0
-  }
-
-  created() {
-    const theme = getTheme()
-    if (document && document.documentElement) {
-      document.documentElement.classList.add(`theme-${theme}`)
-    }
-  }
-
-  mounted() {
-    document.body.onclick = e => {
-      if (e.target && e.target instanceof HTMLAnchorElement && e.target.classList.contains('header-anchor')) {
-        e.preventDefault()
-        const hash = decodeURIComponent(e.target.href.split('#')[1])
-        const query = getQuery()
-        query.hash = hash
-        setQuery(query)
+<script>
+import "../theme/default.css";
+export default {
+    data: () => {
+      return {
+        value: 0,
       }
     }
   }
-}
 </script>
 
 <style lang="scss">
 @import './styles/var';
 @import './styles/media';
-
-@import './styles/markdown';
 
 * {
   margin: 0;

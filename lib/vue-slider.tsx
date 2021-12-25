@@ -1,13 +1,12 @@
-import { Component, Model, Prop, Watch, Vue } from 'vue-property-decorator'
+import { Options, Model, Prop, Watch } from 'vue-property-decorator'
+import { Vue } from 'vue-class-component'
 import {
   Value,
   DataObject,
   Mark,
-  Marks,
   MarksProp,
   Styles,
   DotOption,
-  DotStyle,
   Dot,
   Direction,
   Position,
@@ -34,7 +33,7 @@ export const SliderState: StateMap = {
 
 const DEFAULT_SLIDER_SIZE = 4
 
-@Component({
+@Options({
   data() {
     return {
       control: null,
@@ -44,6 +43,7 @@ const DEFAULT_SLIDER_SIZE = 4
     VueSliderDot,
     VueSliderMark,
   },
+  emits: ['change', 'drag-start', 'drag-end', 'dragging'],
 })
 export default class VueSlider extends Vue {
   control!: Control
@@ -68,7 +68,8 @@ export default class VueSlider extends Vue {
 
   @Prop({
     default: 'ltr',
-    validator: dir => ['ltr', 'rtl', 'ttb', 'btt'].indexOf(dir) > -1,
+    //@ts-ignore
+    validator: (dir) => ['ltr', 'rtl', 'ttb', 'btt'].indexOf(dir) > -1,
   })
   direction!: Direction
 
@@ -106,7 +107,7 @@ export default class VueSlider extends Vue {
   @Prop({ type: Number, default: 0.5 })
   duration!: number
 
-  @Prop({ type: [Object, Array] }) data?: Value[] | object[] | DataObject
+  @Prop({ type: [Object, Array] }) vdata!: Value[] | object[] | DataObject
 
   @Prop({ type: String, default: 'value' }) dataValue!: string
 
@@ -117,16 +118,18 @@ export default class VueSlider extends Vue {
 
   @Prop({
     type: String,
-    validator: val => ['none', 'always', 'focus', 'hover', 'active'].indexOf(val) > -1,
+    //@ts-ignore
+    validator: (val) => ['none', 'always', 'focus', 'hover', 'active'].indexOf(val) > -1,
     default: 'active',
   })
   tooltip!: TooltipProp
 
   @Prop({
     type: [String, Array],
-    validator: data =>
+    //@ts-ignore
+    validator: (data) =>
       (Array.isArray(data) ? data : [data]).every(
-        val => ['top', 'right', 'bottom', 'left'].indexOf(val) > -1,
+        (val) => ['top', 'right', 'bottom', 'left'].indexOf(val) > -1,
       ),
   })
   tooltipPlacement?: Position | Position[]
@@ -352,22 +355,22 @@ export default class VueSlider extends Vue {
   }
 
   get sliderData(): undefined | Value[] {
-    if (this.isObjectArrayData(this.data)) {
-      return (this.data as any[]).map(obj => obj[this.dataValue])
-    } else if (this.isObjectData(this.data)) {
-      return Object.keys(this.data)
+    if (this.isObjectArrayData(this.vdata)) {
+      return (this.vdata as any[]).map((obj) => obj[this.dataValue])
+    } else if (this.isObjectData(this.vdata)) {
+      return Object.keys(this.vdata)
     } else {
-      return this.data as Value[]
+      return this.vdata as Value[]
     }
   }
 
   get sliderMarks(): undefined | MarksProp {
     if (this.marks) {
       return this.marks
-    } else if (this.isObjectArrayData(this.data)) {
-      return val => {
+    } else if (this.isObjectArrayData(this.vdata)) {
+      return (val) => {
         const mark = { label: val }
-        ;(this.data as any[]).some(obj => {
+        ;(this.vdata as any[]).some((obj) => {
           if (obj[this.dataValue] === val) {
             mark.label = obj[this.dataLabel]
             return true
@@ -376,18 +379,18 @@ export default class VueSlider extends Vue {
         })
         return mark
       }
-    } else if (this.isObjectData(this.data)) {
-      return this.data
+    } else if (this.isObjectData(this.vdata)) {
+      return this.vdata
     }
   }
 
   get sliderTooltipFormatter(): undefined | TooltipFormatter | TooltipFormatter[] {
     if (this.tooltipFormatter) {
       return this.tooltipFormatter
-    } else if (this.isObjectArrayData(this.data)) {
-      return val => {
+    } else if (this.isObjectArrayData(this.vdata)) {
+      return (val) => {
         let tooltipText = '' + val
-        ;(this.data as any[]).some(obj => {
+        ;(this.vdata as any[]).some((obj) => {
           if (obj[this.dataValue] === val) {
             tooltipText = obj[this.dataLabel]
             return true
@@ -396,9 +399,9 @@ export default class VueSlider extends Vue {
         })
         return tooltipText
       }
-    } else if (this.isObjectData(this.data)) {
-      const data = this.data
-      return val => data[val]
+    } else if (this.isObjectData(this.vdata)) {
+      const data = this.vdata
+      return (val) => data[val]
     }
   }
 
@@ -488,7 +491,8 @@ export default class VueSlider extends Vue {
       'adsorb',
       'included',
       'dotOptions',
-    ].forEach(name => {
+    ].forEach((name) => {
+      //@ts-ignore
       this.$watch(name, (val: any) => {
         if (
           name === 'data' &&
@@ -521,6 +525,7 @@ export default class VueSlider extends Vue {
   private syncValueByPos() {
     const values = this.control.dotsValue
     if (this.isDiff(values, Array.isArray(this.value) ? this.value : [this.value])) {
+      //@ts-ignore
       this.$emit('change', values.length === 1 ? values[0] : [...values], this.focusDotIndex)
     }
   }
@@ -542,6 +547,7 @@ export default class VueSlider extends Vue {
     if (!this.silent) {
       console.error(`[VueSlider error]: ${message}`)
     }
+    //@ts-ignore
     this.$emit('error', type, message)
   }
 
@@ -580,6 +586,7 @@ export default class VueSlider extends Vue {
     this.setScale()
     this.states.add(SliderState.Drag)
     this.states.add(SliderState.Focus)
+    //@ts-ignore
     this.$emit('drag-start', this.focusDotIndex)
   }
 
@@ -595,6 +602,7 @@ export default class VueSlider extends Vue {
       this.syncValueByPos()
     }
     const value = this.control.dotsValue
+    //@ts-ignore
     this.$emit('dragging', value.length === 1 ? value[0] : [...value], this.focusDotIndex)
   }
 
@@ -640,6 +648,7 @@ export default class VueSlider extends Vue {
       if (!this.useKeyboard || 'targetTouches' in e) {
         this.states.delete(SliderState.Focus)
       }
+      //@ts-ignore
       this.$emit('drag-end', this.focusDotIndex)
     })
   }
@@ -693,7 +702,7 @@ export default class VueSlider extends Vue {
 
   setIndex(index: number | number[]) {
     const value = Array.isArray(index)
-      ? index.map(n => this.control.getValueByIndex(n))
+      ? index.map((n) => this.control.getValueByIndex(n))
       : this.control.getValueByIndex(index)
     this.setValue(value)
   }
@@ -768,7 +777,10 @@ export default class VueSlider extends Vue {
   }
 
   private renderSlot<T>(name: string, data: T, defaultSlot: any, isDefault?: boolean): any {
-    const scopedSlot = this.$scopedSlots[name]
+    //@ts-ignore
+    const scopedSlot = this.$slots[name]
+    console.log(name)
+    console.log(scopedSlot)
     return scopedSlot ? (
       isDefault ? (
         scopedSlot(data)
@@ -789,6 +801,7 @@ export default class VueSlider extends Vue {
         onClick={this.clickHandle}
         onTouchstart={this.dragStartOnProcess}
         onMousedown={this.dragStartOnProcess}
+        //@ts-ignore
         {...this.$attrs}
       >
         {/* rail */}

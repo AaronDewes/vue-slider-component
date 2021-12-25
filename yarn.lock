@@ -5,6 +5,40 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@aarondewes/vue-slider-component@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@aarondewes/vue-slider-component@workspace:."
+  dependencies:
+    "@commitlint/config-conventional": ^15.0.0
+    "@types/chai": ^4.3.0
+    "@types/mocha": ^9.0.0
+    "@vue/cli-plugin-babel": ~5.0.0-rc.1
+    "@vue/cli-plugin-typescript": ~5.0.0-rc.1
+    "@vue/cli-plugin-unit-mocha": ~5.0.0-rc.1
+    "@vue/cli-service": ~5.0.0-rc.1
+    "@vue/test-utils": ^2.0.0-rc.18
+    chai: ^4.3.4
+    codemirror: ^5.65.0
+    commitlint: ^15.0.0
+    core-js: ^3.20.1
+    lint-staged: ^12.1.4
+    markdown-it-anchor: ^8.4.1
+    markdown-it-container: ^3.0.0
+    prettier: ^2.5.1
+    sass: 1.45.1
+    sass-loader: ^12.4.0
+    typescript: ~4.6.0-dev.20211225
+    uslug: ^1.0.4
+    vue: ^3.2.26
+    vue-class-component: ^8.0.0-rc.1
+    vue-markdown-loader: ^2.5.0
+    vue-property-decorator: ^10.0.0-rc.3
+    vue-router: ^4.0.12
+    vue-template-compiler: ^2.6.14
+    vuep: ^0.8.1
+  languageName: unknown
+  linkType: soft
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.16.0, @babel/code-frame@npm:^7.8.3":
   version: 7.16.0
   resolution: "@babel/code-frame@npm:7.16.0"
@@ -10026,40 +10060,6 @@ __metadata:
   checksum: 5ac66dffd956d088267ba45ec17e390de0aebb1ad08fc9431deb1397e265a003ae99b705fe7ca4ee610782de70aef129b4adf0a494171620d8153d794b2e5498
   languageName: node
   linkType: hard
-
-"vue-slider-component@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "vue-slider-component@workspace:."
-  dependencies:
-    "@commitlint/config-conventional": ^15.0.0
-    "@types/chai": ^4.3.0
-    "@types/mocha": ^9.0.0
-    "@vue/cli-plugin-babel": ~5.0.0-rc.1
-    "@vue/cli-plugin-typescript": ~5.0.0-rc.1
-    "@vue/cli-plugin-unit-mocha": ~5.0.0-rc.1
-    "@vue/cli-service": ~5.0.0-rc.1
-    "@vue/test-utils": ^2.0.0-rc.18
-    chai: ^4.3.4
-    codemirror: ^5.65.0
-    commitlint: ^15.0.0
-    core-js: ^3.20.1
-    lint-staged: ^12.1.4
-    markdown-it-anchor: ^8.4.1
-    markdown-it-container: ^3.0.0
-    prettier: ^2.5.1
-    sass: 1.45.1
-    sass-loader: ^12.4.0
-    typescript: ~4.6.0-dev.20211225
-    uslug: ^1.0.4
-    vue: ^3.2.26
-    vue-class-component: ^8.0.0-rc.1
-    vue-markdown-loader: ^2.5.0
-    vue-property-decorator: ^10.0.0-rc.3
-    vue-router: ^4.0.12
-    vue-template-compiler: ^2.6.14
-    vuep: ^0.8.1
-  languageName: unknown
-  linkType: soft
 
 "vue-style-loader@npm:^4.1.0, vue-style-loader@npm:^4.1.3":
   version: 4.1.3

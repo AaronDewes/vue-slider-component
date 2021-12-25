@@ -1,17 +1,17 @@
 {
-  "name": "vue-slider-component",
+  "name": "@aarondewes/vue-slider-component",
   "version": "3.2.15",
   "description": "A highly customized slider component",
-  "author": "NightCatSama <642163903@qq.com>",
+  "author": "AaronDewes <aaron.dewes@web.de>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:library": "npm run test:unit && npm run package && npm run package:css && npm run typings && npm run sass",
+    "build:library": "yarn test:unit && yarn package && yarn package:css && yarn typings && yarn sass",
     "deploy:docs": "sh scripts/deploy.sh",
     "package": "vue-cli-service build --mode package --target lib --modern --name vue-slider-component lib/index.ts",
-    "package:css": "NO_EXTRACT_CSS=true npm run package -- --dest dist-css",
+    "package:css": "NO_EXTRACT_CSS=true yarn package -- --dest dist-css",
     "prettier": "prettier --write lib/**/*.{ts,tsx,scss}",
     "sass": "sass lib/theme:theme",
     "typings": "tsc -p tsconfig.package.json && cp -a lib/typings typings"
@@ -58,13 +58,9 @@
     "vuep": "^0.8.1"
   },
   "bugs": {
-    "url": "https://github.com/NightCatSama/vue-slider-component/issues"
+    "url": "https://github.com/AaronDewes/vue-slider-component/issues"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged",
-    "commit-msg": "commitlint -e $GIT_PARAMS"
-  },
-  "homepage": "https://github.com/NightCatSama/vue-slider-component",
+  "homepage": "https://github.com/AaronDewes/vue-slider-component",
   "keywords": [
     "vue",
     "slider",
@@ -75,13 +71,13 @@
   "license": "MIT",
   "lint-staged": {
     "*.{js,ts,tsx,scss}": [
-      "npm run prettier",
+      "yarn prettier",
       "git add"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NightCatSama/vue-slider-component.git"
+    "url": "git+https://github.com/AaronDewes/vue-slider-component.git"
   },
   "typings": "./typings/index.d.ts",
   "packageManager": "yarn@3.1.1"

@@ -53,12 +53,12 @@ export default class VueSlider extends Vue {
   // Currently dragged slider index
   focusDotIndex: number = 0
 
-  $refs!: {
+  declare $refs: {
     container: HTMLDivElement
     rail: HTMLDivElement
   }
 
-  $el!: HTMLDivElement
+  declare $el: HTMLDivElement
 
   @Model('change', { default: 0 })
   value!: Value | Value[]
@@ -785,6 +785,7 @@ export default class VueSlider extends Vue {
       isDefault ? (
         scopedSlot(data)
       ) : (
+        //@ts-ignore
         <template slot={name}>{scopedSlot(data)}</template>
       )
     ) : (

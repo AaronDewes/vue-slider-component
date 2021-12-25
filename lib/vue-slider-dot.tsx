@@ -4,7 +4,7 @@ import { Value, Styles, Position, TooltipProp, TooltipFormatter } from './typing
 import './styles/dot.scss'
 
 export default class VueSliderDot extends Vue {
-  $refs!: {
+  declare $refs: {
     dot: HTMLDivElement
   }
 
@@ -113,7 +113,7 @@ export default class VueSliderDot extends Vue {
       <div
         ref="dot"
         class={this.dotClasses}
-        aria-valuetext={this.tooltipValue}
+        aria-valuetext={this.tooltipValue.toString()}
         onMousedown={this.dragStart}
         onTouchstart={this.dragStart}
       >

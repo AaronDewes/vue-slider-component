@@ -10,7 +10,7 @@
     ]
   },
   "rules": {
-    "semicolon": [true, "never"],
+    "semicolon": [true, "always"],
     "member-access": [true, "no-public"],
     "arrow-parens": [true, "ban-single-arg-parens"],
     "quotemark": [true, "single", "jsx-double"],

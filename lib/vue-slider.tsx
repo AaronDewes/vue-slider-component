@@ -777,15 +777,13 @@ export default class VueSlider extends Vue {
   }
 
   private renderSlot<T>(name: string, data: T, defaultSlot: any, isDefault?: boolean): any {
-    //@ts-ignore
-    const scopedSlot = this.$slots[name]
-    console.log(name)
-    console.log(scopedSlot)
+    // @ts-ignore Hack to work with Vue compat build (but break Vue 3)
+    const scopedSlot = this.$scopedSlots[name]
     return scopedSlot ? (
       isDefault ? (
         scopedSlot(data)
       ) : (
-        //@ts-ignore
+        // @ts-ignore Hack to work with Vue compat build (but break Vue 3)
         <template slot={name}>{scopedSlot(data)}</template>
       )
     ) : (
